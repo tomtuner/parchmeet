@@ -1,3 +1,3 @@
-<div class="logo left">
-	<h1><a class="no_style_link" href="<?=base_url()?>">ParchMEET</a></h1>
-</div>
+<h1>
+	<a href="<?=base_url()?>">Parchmeet</a>
+</h1>
