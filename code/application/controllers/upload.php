@@ -40,6 +40,64 @@ class Upload extends CI_Controller {
 			$config['max_size']	= '1024';
 
 			$this->upload->initialize($config);
+			
+			$error = true;
+			
+		     foreach($_FILES['uploaded_files']['name'] as $key=>$value)
+		     {
+		          if(is_uploaded_file($_FILES['uploaded_files']['tmp_name'][$key]) && $_FILES['uploaded_files']['error'][$key] == 0)
+		          {
+		                $filename = $_FILES['uploaded_files']['name'][$key];
+		                             
+		                if(move_uploaded_file($_FILES['uploaded_files']['tmp_name'][$key], $path . $filename))
+		                {
+		                      echo 'The file '. $_FILES['uploaded_files']['name'][$key].' was uploaded successful';
+		                      $upload_data = pathinfo($path . $filename);
+				
+								$doc_name = $upload_data['filename'];
+								$doc_uri = base_url('uploads/' . $meeting_password . '/' . $upload_data['basename']);
+								
+								$data = array(
+									'meeting_code'	=>	$meeting_password,
+									'doc_name'		=>	$doc_name,
+									'doc_uri'		=>	$doc_uri
+								);
+								
+								$this->Document_model->upload_document($data);
+		                      $error = false;
+		                }
+		                else
+		                {
+	                      	echo 'There was a problem uploading the file.';
+		                    $error = true;
+		                } 
+		          }
+		          else
+		          {
+		            echo 'There is a problem with the uploading system.';
+                    $error = true;
+		          }
+		     }
+		     
+		     if ($error) {
+		     	$data = array('title' => "Setup", 'main_content' => 'setup_view', 'error' => $this->upload->display_errors());
+				$this->load->view('template', $data);
+		     }else {
+		    	
+				
+				$email = $this->input->post('email');
+				if (!empty($email)) {
+					$this->Email_model->send_confirm_email($email, $meeting_password);
+				}
+				
+				$error = 'An E-mail has been sent including your meeting password to ' . $email . '.';
+				
+				// Upload Successful
+				$data = array('title' => 'Create Meeting', 'upload_data' => $upload_data, 'main_content' => 'setup_view', 'error' => $error);
+				$this->load->view('template', $data);
+
+		     }
+		     /*
 			if ( ! $this->upload->do_upload())
 			{
 				$data = array('title' => "Setup", 'main_content' => 'setup_view', 'error' => $this->upload->display_errors());
@@ -70,7 +128,7 @@ class Upload extends CI_Controller {
 				// Upload Successful
 				$data = array('title' => 'Create Meeting', 'upload_data' => $upload_data, 'main_content' => 'setup_view', 'error' => $error);
 				$this->load->view('template', $data);
-			}
+			}*/
 		}
 	}
 }

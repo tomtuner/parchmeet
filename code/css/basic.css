@@ -174,7 +174,7 @@ a {
 	-webkit-transition: color 0.3s linear;
 	transition: color 0.3s linear;
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #000000;
 }
 
 a:hover {

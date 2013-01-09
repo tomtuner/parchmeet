@@ -17,6 +17,7 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="stylesheet" type="text/css" href="<?=base_url('css/basic.css');?>" media="screen, handheld">
         <link rel="stylesheet" type="text/css" href="<?=base_url('css/mobile.css');?>" media="only screen and (min-width: 320px) and (max-width: 640px)">
+        <link rel="stylesheet" type="text/css" href="<?=base_url('css/desktop.css');?>" media="only screen and (min-width: 640px)">
 <!--         <link rel="stylesheet" href="<?=base_url('css/main.css');?>"> -->
 <!--         <link rel="stylesheet" href="<?=base_url('css/parchmeet.css');?>"> -->
 <!-- 	    <script src="<?=base_url('js/vendor/modernizr-2.6.2.min.js');?>"></script> -->
